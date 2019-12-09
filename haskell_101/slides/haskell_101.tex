@@ -18,7 +18,7 @@
 % \usepackage[11-30]{pagesel}
 
 \title{Haskell 101}
-\author{ibobyr@, nicuveo@}
+\author{ningningxie@, ibobyr@, nicuveo@}
 %\institue{Google}
 \date{\small\today}
 
@@ -54,6 +54,18 @@
 
 
 \section{Intro}
+
+\begin{frame}
+  \frametitle{About me}
+  \begin{center}
+  \begin{itemize}
+    \item Ph.D. in programming languages
+    \item Haskell user/researcher
+    \item Modest GHC contributor
+  \end{itemize}
+  \end{center}
+\end{frame}
+
 
 \begin{frame}
   \frametitle{Today's menu}
@@ -298,7 +310,7 @@
   \frametitle{Reduction steps}
   \begin{itemize}
   \item<1-> Strict evaluation: inner to outer
-  \item<6-> Lazy evaluation: outer to inner
+  \item<2-> Lazy evaluation: outer to inner
   \end{itemize}
   \begin{center}
     add( x , y ) = x + y
@@ -306,31 +318,7 @@
 
   \begin{minipage}[t][.7\textheight]{\textwidth}
   \begin{center}
-    \begin{onlyenv}<2>
-      \begin{tabular}{ c c c c c }
-        \\ add( & 12 + 8 & ,              & 20 + 2 & )
-        \\      &        &                &        &
-        \\      &        &                &        &
-        \\      &        & \phantom{42}   &        &
-      \end{tabular}
-    \end{onlyenv}
-    \begin{onlyenv}<3>
-      \begin{tabular}{ c c c c c }
-        \\ add( & 12 + 8 & ,              & 20 + 2 & )
-        \\ add( & 20     & ,              & 22     & )
-        \\      &        &                &        &
-        \\      &        & \phantom{42}   &        &
-      \end{tabular}
-    \end{onlyenv}
-    \begin{onlyenv}<4>
-      \begin{tabular}{ c c c c c }
-        \\ add( & 12 + 8 & ,              & 20 + 2 & )
-        \\ add( & 20     & ,              & 22     & )
-        \\      & 20     & +              & 22     &
-        \\      &        & \phantom{42}   &        &
-      \end{tabular}
-    \end{onlyenv}
-    \begin{onlyenv}<5>
+    \begin{onlyenv}<1>
       \begin{tabular}{ c c c c c }
         \\ add( & 12 + 8 & ,  & 20 + 2 & )
         \\ add( & 20     & ,  & 22     & )
@@ -338,23 +326,7 @@
         \\      &        & 42 &        &
       \end{tabular}
     \end{onlyenv}
-    \begin{onlyenv}<7>
-      \begin{tabular}{ c c c c c }
-        \\ add( & 12 + 8 & ,              & 20 + 2 & )
-        \\      &        &                &        &
-        \\      &        & \phantom{42}   &        &
-        \\      &        &                &        &
-      \end{tabular}
-    \end{onlyenv}
-    \begin{onlyenv}<8>
-      \begin{tabular}{ c c c c c }
-        \\ add( & 12 + 8 & ,              & 20 + 2 & )
-        \\      & 12 + 8 & +              & 20 + 2 &
-        \\      &        & \phantom{42}   &        &
-        \\      &        &                &        &
-      \end{tabular}
-    \end{onlyenv}
-    \begin{onlyenv}<9>
+    \begin{onlyenv}<2>
       \begin{tabular}{ c c c c c }
         \\ add( & 12 + 8 & ,  & 20 + 2 & )
         \\      & 12 + 8 & +  & 20 + 2 &
@@ -408,30 +380,6 @@
 \end{frame}
 
 
-\section{Codelab - Section 1}
-
-\begin{frame}
-  \frametitle{Codelab - Section 1}
-  \begin{itemize}
-  \item Codelab - Section 1
-  \item Compiler
-    \begin{itemize}
-    \item apt-get install haskell-platform
-    \end{itemize}
-  \item Source
-    \begin{itemize}
-    \item
-      {\scriptsize\texttt{git clone \textbackslash \\
-          ~~https://github.com/google/haskell-trainings.git \\
-          cd haskell-trainings/haskell\_101/codelab}}
-    \item
-      \href{https://github.com/google/haskell-trainings/releases/download/v1.1/haskell_101_codelab.zip}
-      {https://github.com/google/haskell-trainings/releases/download/v1.1/haskell\_101\_codelab.zip}
-    \end{itemize}
-  \end{itemize}
-\end{frame}
-
-
 \section{Curried functions, partial application}
 
 \begin{frame}
@@ -441,8 +389,8 @@
   \uncover<2->{\inlinecode{f}      &\inlinecode{::}&\inlinecode{Int -> ( Int -> Int )}} \\
   \uncover<1->{\inlinecode{f}      &\inlinecode{::}&\inlinecode{Int ->   Int -> Int}} \\
   \uncover<3->{\inlinecode{f 1}    &\inlinecode{::}&\inlinecode{         Int -> Int}} \\
-  \uncover<5->{\inlinecode{f 1 2}  &\inlinecode{::}&\inlinecode{                Int}} \\
-  \uncover<4->{\inlinecode{(f 1) 2}&\inlinecode{::}&\inlinecode{                Int}}
+  \uncover<4->{\inlinecode{f 1 2}  &\inlinecode{::}&\inlinecode{                Int}} \\
+  \uncover<5->{\inlinecode{(f 1) 2}&\inlinecode{::}&\inlinecode{                Int}}
 \end{tabular}
 ~\\~\\~\\
 \end{center}
@@ -481,7 +429,8 @@
 \bi{\ic{length}} &\ic{.}& \bi{\ic{show}} &\ic{::}& \type{\ic{Stuff}} &       &             &\ic{->}& \ic{Int} \\
   \end{tabular}
 \end{onlyenv}
-\only<13>{\inlinecode{cat input | grep token | sed stuff | tee output}}
+\only<13->{\ic{(} \bi{\ic{length}} \ic{(} \bi{\ic{show}} \ic{(} \bi{\ic{filter}} \ic{ p (}  \bi{\ic{map}} \ic{ f xs))}\\}
+\only<14>{\bi{\ic{length}} \ic{.} \bi{\ic{show}} \ic{.} \bi{\ic{filter}} \ic{ p .}  \bi{\ic{map}} \ic{ f \$ xs} }
 \end{center}
 \end{minipage}
 \end{frame}
@@ -731,16 +680,6 @@
 \end{frame}
 
 
-\section{Codelab - Section 2}
-
-\begin{frame}
-  \frametitle{Codelab - Section 2}
-  \begin{itemize}
-    \item Codelab - Section 2
-  \end{itemize}
-\end{frame}
-
-
 \section{Advanced data definition}
 
 \begin{frame}[fragile]
@@ -891,14 +830,6 @@
 \end{minipage}
 \end{frame}
 
-\begin{frame}
-  \frametitle{The end of the theoretical part!}
-  \begin{center}
-    Questions?
-  \end{center}
-\end{frame}
-
-
 %% Links
 
 \section{Links}
@@ -906,6 +837,7 @@
 \begin{frame}
   \frametitle{Links}
   \begin{itemize}
+  \item \href{https://www.cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf}{Why functional programming matters}
   \item \href{https://tryhaskell.org}{tryhaskell.org}
   \item \href{https://learnyouahaskell.com}{learnyouahaskell.com}
   \item \href{https://book.realworldhaskell.org}{book.realworldhaskell.org}
@@ -915,25 +847,30 @@
   \end{itemize}
 \end{frame}
 
-
-\section{Codelab - Sections 3, 4, 5, and 6}
+\section{Codelab}
 
 \begin{frame}
-  \frametitle{Codelab - Sections 3, 4, 5, and 6}
+  \frametitle{Codelab}
   \begin{itemize}
-    \item Codelab - Sections 3, 4, 5, and 6
+  \item Codelab
+  \item Compiler
+    \begin{itemize}
+    \item apt-get install haskell-platform
+    \end{itemize}
+  \item Source
+    \begin{itemize}
+    \item
+      {\scriptsize\texttt{git clone \textbackslash \\
+          ~~https://github.com/google/haskell-trainings.git \\
+          cd haskell-trainings/haskell\_101/codelab}}
+    \item
+      \href{https://github.com/google/haskell-trainings/releases/download/v1.1/haskell_101_codelab.zip}
+      {https://github.com/google/haskell-trainings/releases/download/v1.1/haskell\_101\_codelab.zip}
+    \end{itemize}
   \end{itemize}
 \end{frame}
 
 
-\section{The end}
-
-\begin{frame}
-  \frametitle{The end!}
-  \begin{center}
-    Questions?
-  \end{center}
-\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% End

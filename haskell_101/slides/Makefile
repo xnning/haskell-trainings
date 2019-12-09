@@ -8,6 +8,7 @@ PDF_FLAGS = -interaction nonstopmode
 CLEAN = '*~' '\#*' '.\#*' '.DS_Store' '*.log' '*.aux' '*.toc' '*.nav' '*.out' '*.snm' '*.vrb' '*.o' '*.hi'
 
 
+all: $(PDF)
 
 ## OUTPUT
 
@@ -39,3 +40,5 @@ distclean: clean
 ## SPECIALS
 
 .PRECIOUS: %.pdf ;
+
+.phony: all clean distclean
